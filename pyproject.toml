@@ -1,0 +1,100 @@
+[project]
+name = "flask-exception"
+description = "Flask extension that provides exception handeling."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "BSD 3-Clause License"}
+classifiers = [
+  "Development Status :: 1 - Beta",
+  "Environment :: Web Environment",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: PyPy",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Framework :: Flask",
+]
+dependencies = [
+  "Flask>=1.1.4",
+]
+keywords = [
+  "flask",
+  "exception",
+  "extension"
+]
+authors = [
+  {name = "Ido Shraga", email = "idoshraga@gmail.com"}
+]
+dynamic = ["version"]
+
+
+[project.urls]
+Homepage = "https://github.com/idoshr/flask-exception"
+Documentation = "https://flask-exception.readthedocs.io/en/latest/"
+Repository = "https://github.com/idoshr/flask-exception"
+Changelog = "https://github.com/idoshr/flask-exception/releases"
+
+[build-system]
+requires = [
+  "setuptools>=45",
+  "setuptools_scm[toml]>=6.3.1",
+  "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+zip-safe = false
+platforms = ["any"]
+packages=["flask_exception"]
+
+[tool.setuptools.dynamic]
+version = {attr = "flask_exception._version.version"}
+
+[tool.setuptools_scm]
+write_to = "flask_exception/_version.py"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.tox
+  | \.venv
+  | \.vscode
+  | docs
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+
+[tool.pytest.ini_options]
+#addopts = "--cov=flask_exception --cov-config=setup.cfg"
+testpaths = ["tests"]
+filterwarnings = [
+  "error",
+  "ignore::ResourceWarning",
+  "ignore::DeprecationWarning:flask_exception",
+  "ignore::DeprecationWarning:tests",
+  "ignore:.*deprecated and ignored since IPython.*:DeprecationWarning"
+  ]
