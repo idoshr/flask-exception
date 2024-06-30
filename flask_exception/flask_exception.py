@@ -3,7 +3,7 @@ import logging
 import traceback
 from datetime import datetime
 
-from flask import request, current_app
+from flask import current_app, request
 from werkzeug.exceptions import HTTPException
 
 
@@ -27,7 +27,7 @@ class FlaskException:
 
     def init_app(self, app):
         app.extensions["FLASK_EXCEPTION"] = self
-        app.config.setdefault("FLASK_EXCEPTION_APP_NAME", 'FLASK')
+        app.config.setdefault("FLASK_EXCEPTION_APP_NAME", "FLASK")
         if not app.config["FLASK_EXCEPTION_ADD_TO_DB_FUNC"]:
             raise ValueError("FLASK_EXCEPTION_ADD_TO_DB_FUNC is not set.")
 
@@ -35,7 +35,7 @@ class FlaskException:
             raise ValueError("FLASK_EXCEPTION_ADD_TO_DB_FUNC is not callable.")
 
         if not isinstance(app.config["FLASK_EXCEPTION_OBJ_OF_LOGGER"], logging.Logger):
-            flask_logger = logging.getLogger('FLASK_EXCEPTION')
+            flask_logger = logging.getLogger("FLASK_EXCEPTION")
         else:
             flask_logger = app.config["FLASK_EXCEPTION_OBJ_OF_LOGGER"]
 
@@ -45,11 +45,13 @@ class FlaskException:
             # start with the correct headers and status code from the error
             response = e.get_response()
             # replace the body with JSON
-            response.data = json.dumps({
-                "code": e.code,
-                # "name": e.name,
-                "error": e.description,
-            })
+            response.data = json.dumps(
+                {
+                    "code": e.code,
+                    # "name": e.name,
+                    "error": e.description,
+                }
+            )
             response.content_type = "application/json"
             flask_logger.error(response.data)
 
@@ -63,18 +65,21 @@ class FlaskException:
                 return handle_exception(e)
 
             flask_logger.error(str(e), exc_info=traceback.format_exc())
-            current_app.config["FLASK_EXCEPTION_ADD_TO_DB_FUNC"](current_app.config["FLASK_EXCEPTION_APP_NAME"],
-                                                                 method=request.method,
-                                                                 endpoint=request.endpoint,
-                                                                 host=request.host,
-                                                                 url=request.url,
-                                                                 args=request.args,
-                                                                 data=request.data,
-                                                                 failed_date=datetime.now(),
-                                                                 exception=str(e), trace=traceback.format_exc())
+            current_app.config["FLASK_EXCEPTION_ADD_TO_DB_FUNC"](
+                current_app.config["FLASK_EXCEPTION_APP_NAME"],
+                method=request.method,
+                endpoint=request.endpoint,
+                host=request.host,
+                url=request.url,
+                args=request.args,
+                data=request.data,
+                failed_date=datetime.now(),
+                exception=str(e),
+                trace=traceback.format_exc(),
+            )
             data = {
                 "code": 500,
                 # "name": e.name,
-                "error": 'Internal Server Error.',
+                "error": "Internal Server Error.",
             }
             return data, 500

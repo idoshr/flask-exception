@@ -7,7 +7,8 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6fb8ae00b1008f5f1b20/test_coverage)](https://codeclimate.com/github/idoshr/flask-exception/test_coverage)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/flask-exception)
 
-Flask-Exception is a Flask extension that provides exception handling and logging for Flask applications.
+Flask-Exception is a Flask extension that provides exception handling and logging for
+Flask applications.
 
 ## Installation
 

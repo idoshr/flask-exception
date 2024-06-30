@@ -1,6 +1,6 @@
 [project]
 name = "flask-exception"
-description = "Flask extension that provides exception handeling."
+description = "Flask-Exception is a Flask extension that provides exception handling and logging for Flask applications."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "BSD 3-Clause License"}
